@@ -1,0 +1,13 @@
+* My dotfiles
+These are my config files that I personally use.
+
+| programs   | description        |
+|------------+--------------------|
+| [[https://archlinux.org][Arch Linux]] | Linux distribution |
+| [[https://dwm.suckless.org][dwm]]        | window manager     |
+| [[https://st.suckless.org/][st]]         | terminal           |
+|------------+--------------------|
+| [[https://github.com/neovim/neovim][nvim]]       | main text editor   |
+| [[https://www.gnu.org/software/emacs/][emacs]]      | still learning     |
+
+And that's it!
