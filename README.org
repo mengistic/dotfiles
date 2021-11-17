@@ -1,5 +1,5 @@
 * My dotfiles
-These are my config files that I personally use.
+These are the programs I personally use:
 
 | programs   | description        |
 |------------+--------------------|
