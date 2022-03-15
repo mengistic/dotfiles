@@ -1,0 +1,73 @@
+#    ____            _              
+#   | __ )  __ _ ___| |__  _ __ ___ 
+#   |  _ \ / _` / __| '_ \| '__/ __|
+#   | |_) | (_| \__ \ | | | | | (__ 
+#   |____/ \__,_|___/_| |_|_|  \___|
+#   
+                                   
+
+# If not running interactively, don't do anything
+[[ $- != *i* ]] && return
+
+HISTFILE=~/.cache/bash/bash_history
+HISTFILESIZE=1000
+HISTSIZE=1000
+
+
+# ==> Alias
+set -o vi
+bind -m vi-command 'Control-l:clear-screen'
+bind -m vi-insert 'Control-l:clear-screen'
+
+alias e='emacs'
+alias vonf='nvim ~/.config/nvim/init.vim'
+#alias nvim="NVIM_LISTEN_ADDRESS=/tmp/nvimsocket nvim"
+#alias vim='nvim'
+#alias vim='emacs'
+
+alias ls='ls --color=auto'
+alias la='ls -al'
+alias py='python3'
+#alias rm='rm -v'
+#alias cp='cp -v'
+#alias mv='mv -v'
+
+
+
+alias lf='lfub'
+alias web='cd ~/doc/web && nvim index.html'
+alias sc='cd ~/.local/script && ls'
+alias sx='vim ~/.config/sxhkd/sxhkdrc'
+alias r='ranger'
+alias inf='setfont ter-v28n'
+alias pdf='zathura'
+alias gc='cd ~/doc/code/ && ls'
+alias gv='cd ~/for-fun/vid/ && ls'
+alias emoji='nvim ~/doc/debug/emoji'
+alias cddwm='cd ~/.local/app/dwm/ && ls'
+alias nerd='nvim ~/doc/debug/test'
+alias texpac='cd /usr/share/texmf-dist/tex/latex && ls'
+alias info='nvim ~/doc/info/info'
+alias fa='nvim ~/doc/debug/fontawesome'
+alias scim='sc-im'
+alias bib='nvim ~/doc/bib/bib.bib'
+
+alias gpm='cd ~/doc/project/math-university && ls'
+alias gr='cd ~/doc/repo && ls'
+
+# <==
+
+
+#PS1="\n\
+#\[\033[0;37m\]┌[\
+#\[\033[0;37m\]\w\
+#\[\033[0;37m\]]\n\
+#\[\033[0;37m\]└─ \
+#\[\033[1;35m\]==> \
+#\[\033[0m\]\
+#"
+
+PS1="\n\
+ \[\033[1;35m\]==> \
+\[\033[0m\]\
+"
