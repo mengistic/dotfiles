@@ -4,7 +4,7 @@
 #   | |_) | (_| \__ \ | | | | | (__ 
 #   |____/ \__,_|___/_| |_|_|  \___|
 #   
-                                   
+
 
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
@@ -34,11 +34,11 @@ alias py='python3'
 
 
 
-alias lf='lfub'
+alias r='lfcd'
+#alias lf='lfub'
 alias web='cd ~/doc/web && nvim index.html'
 alias sc='cd ~/.local/script && ls'
 alias sx='vim ~/.config/sxhkd/sxhkdrc'
-alias r='ranger'
 alias inf='setfont ter-v28n'
 alias pdf='zathura'
 alias gc='cd ~/doc/code/ && ls'
@@ -56,6 +56,20 @@ alias gpm='cd ~/doc/project/math-university && ls'
 alias gr='cd ~/doc/repo && ls'
 
 # <==
+
+lfcd () {
+  tmp="$(mktemp)"
+  lfub -last-dir-path="$tmp" "$@"
+  if [ -f "$tmp" ]; then
+    dir="$(cat "$tmp")"
+    rm -f "$tmp"
+    if [ -d "$dir" ]; then
+      if [ "$dir" != "$(pwd)" ]; then
+        cd "$dir"
+      fi
+    fi
+  fi
+}
 
 
 #PS1="\n\
