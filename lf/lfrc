@@ -22,7 +22,7 @@ set ifs "\n"
 set scrolloff 10
 set icons
 set period 1
-set hiddenfiles ".*:*.aux:*.log:*.bbl:*.bcf:*.blg:*.run.xml:lost+found"
+set hiddenfiles ".*:*.aux:*.log:*.pre:*.bbl:*.bcf:*.blg:*.run.xml:lost+found"
 set cleaner '~/.config/lf/cleaner'
 set previewer '~/.config/lf/scope'
 set ratios '1:3:2'
@@ -92,15 +92,25 @@ cmd copyto ${{
 	notify-send "📋 File(s) copied." "File(s) copies to $dest."
 }}
 
-cmd setbg "$1"
 cmd bulkrename $vidir
+
+cmd setbg ${{
+  wal -i $f
+}}
+
+
+
+#cmd setbg "$1"
 # <==
 # ==> Bindings
 
 map gw cd ~/pic/wallpaper/
 map gr cd ~/doc/repo/
 map gs cd ~/fun/song/
-map gm cd ~/fun/vid/movie
+map gm cd ~/fun/vid/movie/
+map gb cd ~/doc/book/
+
+map F setbg
 
 
 map <c-f> $lf -remote "send $id select '$(fzf)'"
@@ -126,7 +136,7 @@ map I push A<c-a> # at the very beginning
 map i push A<a-b><a-b><a-f> # before extention
 map a push A<a-b> # after extention
 map B bulkrename
-map b $setbg $f
+#map b $setbg $f
 
 map <c-e> down
 map <c-y> up
