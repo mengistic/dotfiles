@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name:sqrt 
+# key:rt
+# --
+\\sqrt{${1:•}}

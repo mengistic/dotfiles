@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: manim_class 
+# key: mcs
+# --
+
+class ${1:main}(${2:Scene}):
+    def construct(self):
+
+        ${0:}
+
+        self.wait()

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name:n-root 
+# key:rtt 
+# --
+\\sqrt[${1:3}]{${2:•}}

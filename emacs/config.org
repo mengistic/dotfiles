@@ -1,0 +1,237 @@
+
+* Basic Configurations
+** Melpa
+#+begin_src emacs-lisp
+  (require 'package)
+  (package-initialize)
+  (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+#+end_src
+** Load Path
+#+begin_src emacs-lisp
+  (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
+  (add-to-list 'load-path "~/.emacs.d/clone/orgmode")
+  (add-to-list 'load-path "~/.emacs.d/clone/evil")
+  (add-to-list 'load-path "~/.emacs.d/clone/folding")
+  (add-to-list 'load-path "~/.emacs.d/clone/dashboard")
+  (add-to-list 'load-path "~/.emacs.d/clone/all-the-icons")
+  (add-to-list 'load-path "~/.emacs.d/clone/fzf")
+  (add-to-list 'load-path "~/.emacs.d/clone/ligature")
+  (add-to-list 'load-path "~/.emacs.d/clone/markdown-mode")
+  (add-to-list 'load-path "~/.emacs.d/clone/company")
+  ;;(add-to-list 'load-path "~/.emacs.d/clone/minibuffer")
+#+end_src
+** Basic
+*** custom
+#+begin_src emacs-lisp
+  (custom-set-variables '(line-spacing 3))
+  (custom-set-faces '(line-number ((t (:background "#111111" :foreground "#4B5363" :slant oblique)))))
+#+end_src
+*** basic
+#+begin_src emacs-lisp
+  (setq inhibit-startup-screen t)
+
+  (load-theme 'atom-one-dark t)
+  (tool-bar-mode -1)
+  (menu-bar-mode -1)
+  (toggle-scroll-bar -1)
+  (global-hl-line-mode 0)
+  (set-face-attribute 'region nil :background "#3e4446" :foreground "#ffffff")
+
+
+  (setq-default tab-width 2)
+  (setq custom-file "~/.emacs.d/emacs_saves.el")
+  (setq backup-inhibited t)
+  (setq make-backup-files nil)
+  (setq pixel-scroll-precision-large-scroll-height 40.0)
+  (setq redisplay-dont-pause t)
+  (setq scroll-conservatively 10)
+  (setq scroll-margin 7)
+  (setq compilation-read-command nil)
+
+  ;;(set-fontset-font t 'unicode (font-spec :family "all-the-icons-1") nil 'append)
+  (set-frame-parameter (selected-frame) 'alpha '(90 . 90))
+  (set-background-color "black")
+  (set-face-attribute 'default (selected-frame) :height 140
+                      :font "JetBrains Mono")
+  (set-fontset-font t 'khmer "Khmer OS Siemreap-13")
+
+
+
+  (set-face-attribute 'mode-line nil
+                      :background "#353644"
+                      :foreground "white"
+                      :box '(:line-width 2 :color "#353644")
+                      :overline nil
+                      :underline nil)
+
+  (set-face-attribute 'mode-line-inactive nil
+                      :background "#565063"
+                      :foreground "white"
+                      :box '(:line-width 2 :color "#565063")
+                      :overline nil
+                      :underline nil)
+
+  ;; line numbers
+  (global-display-line-numbers-mode)
+  (setq display-line-numbers-type 'relative)
+#+end_src
+
+* Packages
+** evil
+#+begin_src emacs-lisp
+  (require 'evil)
+  (evil-mode)
+
+  
+  (evil-define-key 'visual 'global (kbd "SPC i") 'indent-region )
+  (electric-pair-mode)
+#+end_src
+** org-mode
+
+#+begin_src emacs-lisp
+  (require 'org-bullets)
+  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+  (add-hook 'org-mode-hook 'org-indent-mode)
+
+  (define-key evil-normal-state-map (kbd "TAB") 'org-cycle)
+  ;;(setq org-ellipsis "...")
+  ;;▼, ↴, ⬎, ⤷, and ⋱.⤷⤵
+#+end_src
+
+** dashboard
+#+begin_src emacs-lisp
+  (require 'dashboard)
+  (dashboard-setup-startup-hook)
+
+  (setq dashboard-startup-banner "~/pic/avatar/aarovos.jpeg")
+  (setq dashboard-banner-logo-title "I know that I know nothing.")
+  (setq dashboard-set-footer nil)
+  (setq dashboard-set-init-info nil)
+  (setq dashboard-items '((recents  . 5)))
+
+
+  (defun me-save-and-quit ()
+    (interactive)
+    (evil-write nil nil)
+    (switch-to-buffer "*dashboard*"))
+
+  (define-key evil-normal-state-map (kbd "Q") 'me-save-and-quit)
+#+end_src
+** company
+I use this source to help configure ~company~ mode.
+
+- https://www.monolune.com/articles/configuring-company-mode-in-emacs/
+- https://company-mode.github.io/
+- https://www.emacswiki.org/emacs/CompanyMode
+
+#+begin_src emacs-lisp
+  (require 'company)
+  (require 'company-math)
+  (require 'company-tng)
+
+
+  (add-hook 'after-init-hook 'global-company-mode)
+
+  (setq company-require-match nil)
+  (setq company-dabbrev-downcase 0)
+  (setq company-idle-delay 0)
+  (setq company-minimum-prefix-length 1)
+  (setq company-selection-wrap-around t)
+  (setq company-tooltip-limit 6)
+  (setq company-tooltip-flip-when-above t)
+  (setq company-tooltip-margin 3)
+
+  (define-key company-active-map (kbd "<tab>") 'company-select-next)
+  (define-key company-active-map (kbd "<backtab>") 'company-select-previous)
+
+  ;;(define-key company-active-map (kbd "C-SPC") #'company-complete-selection)
+  ;;(company-tng-configure-default)
+  ;;(setq company-frontends '(company-tng-frontend company-box-frontend))
+                                          ;(add-hook 'company-mode-hook 'company-box-mode)
+#+end_src
+
+** ligature
+#+begin_src emacs-lisp
+  (require 'ligature)
+  (ligature-set-ligatures 'prog-mode '("-|" "-~" "---" "-<<" "-<" "--" "->" "->>" "-->" "///" "/=" "/=="
+                                       "/>" "//" "/*" "*>" "***" "*/" "<-" "<<-" "<=>" "<=" "<|" "<||"
+                                       "<|||" "<|>" "<:" "<>" "<-<" "<<<" "<==" "<<=" "<=<" "<==>" "<-|"
+                                       "<<" "<~>" "<=|" "<~~" "<~" "<$>" "<$" "<+>" "<+" "</>" "</" "<*"
+                                       "<*>" "<->" "<!--" ":>" ":<" ":::" "::" ":?" ":?>" ":=" "::=" "=>>"
+                                       "==>" "=/=" "=!=" "=>" "===" "=:=" "==" "!==" "!!" "!=" ">]" ">:"
+                                       ">>-" ">>=" ">=>" ">>>" ">-" ">=" "&&&" "&&" "|||>" "||>" "|>" "|]"
+                                       "|}" "|=>" "|->" "|=" "||-" "|-" "||=" "||" ".." ".?" ".=" ".-" "..<"
+                                       "..." "+++" "+>" "++" "[||]" "[<" "[|" "{|" "??" "?." "?=" "?:" "##"
+                                       "###" "####" "#[" "#{" "#=" "#!" "#:" "#_(" "#_" "#?" "#(" ";;" "_|_"
+                                       "__" "~~" "~~>" "~>" "~-" "~@" "$>" "^=" "]#"))
+  (global-ligature-mode t)
+#+end_src
+
+** fzf
+#+begin_src emacs-lisp
+  (require 'fzf)
+  (define-key evil-normal-state-map (kbd "\C-p") 'fzf)
+#+end_src
+
+** yas
+#+begin_src emacs-lisp
+  (yas-global-mode 1)
+  (add-hook 'yas-minor-mode-hook (lambda ()
+                                   (yas-activate-extra-mode 'fundamental-mode)))
+
+  (define-key yas-minor-mode-map (kbd "TAB") nil)
+  (define-key yas-minor-mode-map (kbd "C-SPC") 'yas-expand)
+#+end_src
+
+** lsp
+*** settings
+#+begin_src emacs-lisp
+  (use-package lsp-mode)
+  (use-package lsp-ui)
+  (lsp-ui-mode 1)
+
+
+  ;;https://emacs-lsp.github.io/lsp-mode/tutorials/how-to-turn-off/
+  (setq lsp-diagnostic-package :none)
+  (setq lsp-diagnostics-provider :none)
+  (setq lsp-ui-doc-enable nil)
+  (setq lsp-headerline-breadcrumb-enable t)
+  (setq lsp-ui-sideline-enable nil)
+  (setq lsp-ui-sideline-show-code-actions nil)
+  (setq lsp-ui-sideline-enable nil)
+  (setq lsp-modeline-code-actions-enable nil)
+  (setq lsp-modeline-diagnostics-enable nil)
+#+end_src
+
+*** python
+#+begin_src emacs-lisp
+  (use-package lsp-pyright
+    :ensure t
+    :hook (python-mode . (lambda ()
+                           (require 'lsp-pyright)
+                           (lsp))))
+#+end_src
+*** latex
+#+begin_src emacs-lisp
+  (add-hook 'LaTeX-mode-hook 'lsp)
+  (setq lsp-tex-server 'digestif)
+#+end_src
+** auctex
+#+begin_src emacs-lisp
+  (use-package tex
+    :ensure auctex)
+
+  ;(use-package company-math)
+
+  (add-hook 'LaTeX-mode-hook #'LaTeX-math-mode)
+  (setq TeX-electric-sub-and-superscript nil)
+  (setq font-latex-fontify-script nil)
+  (setq font-latex-fontify-sectioning 'color)
+#+end_src
+** ivy
+#+begin_src emacs-lisp
+  (use-package ivy
+    :ensure t)
+
+  (ivy-mode 1)
+#+end_src

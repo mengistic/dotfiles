@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: manim_play
+# key: mpl
+# --
+
+self.play($0)

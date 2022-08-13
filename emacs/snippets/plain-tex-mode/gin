@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name:gin 
+# key:gin
+# --
+\\begin{$1}
+$0
+\\end{$1}

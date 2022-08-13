@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name:code listing 
+# key:code 
+# --
+\\begin{lstlisting}[language=$1]
+$0
+\\end{lstlisting}

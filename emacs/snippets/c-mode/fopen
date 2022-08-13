@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: fopen
+# key: fopen
+# --
+fgets(${1:variable}, ${2:size}, ${3:stdin});
+
