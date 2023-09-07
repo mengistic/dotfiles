@@ -1,13 +1,13 @@
+
 * My dotfiles
-These are the programs I personally use:
 
-| programs   | description        |
-|------------+--------------------|
-| [[https://archlinux.org][Arch Linux]] | Linux distribution |
-| [[https://dwm.suckless.org][dwm]]        | window manager     |
-| [[https://st.suckless.org/][st]]         | terminal           |
-|------------+--------------------|
-| [[https://github.com/neovim/neovim][nvim]]       | main text editor   |
-| [[https://www.gnu.org/software/emacs/][emacs]]      | still learning     |
+These are the set-up that I personally use:
 
-And that's it!
+- distribution: [[https://archlinux.org/][ArchLinux]]
+- Window Manager: [[https://hyprland.org][Hyprland]]
+- Status bar: [[https://github.com/Alexays/Waybar][Waybar]]
+- Terminal: [[https://codeberg.org/dnkl/foot/][Foot]] 
+- Text Editor: [[https://www.gnu.org/software/emacs/][Emacs]] and [[https://neovim.io/][Neovim]]
+- File manager: [[https://github.com/gokcehan/lf][lf]]
+- 
+
