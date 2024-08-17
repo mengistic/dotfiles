@@ -144,6 +144,7 @@
 (yas-global-mode 1)
 
 (use-package folding
+  :disabled
   :ensure t
   :config
   (folding-add-to-marks-list 'LaTeX-mode "%{{{" "%}}}" nil t)
