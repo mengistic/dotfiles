@@ -160,3 +160,11 @@
   ;; after turn-of-folding-mode, folding-toggle-show-hide still work but wanky
   )
 
+
+
+(use-package magit
+  :ensure t
+  :config
+  (define-key evil-normal-state-map (kbd "SPC g") 'magit-status)
+  )
+
