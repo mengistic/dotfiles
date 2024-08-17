@@ -1,1 +1,0 @@
-("~/.emacs.d/" "~/doc/proj/upper-half-plane/" "~/doc/proj/test/" "~/doc/proj/mengistic.github.io/" "~/doc/proj/krulen/" "~/doc/proj/dotfiles/")
