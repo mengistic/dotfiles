@@ -142,3 +142,21 @@
   (define-key yas-minor-mode-map (kbd "C-SPC") yas-maybe-expand)
   )
 (yas-global-mode 1)
+
+(use-package folding
+  :ensure t
+  :config
+  (folding-add-to-marks-list 'LaTeX-mode "%{{{" "%}}}" nil t)
+  (define-key evil-normal-state-map (kbd "F") 'toggle-folding-mode)
+  (define-key evil-visual-state-map (kbd "F") 'folding-fold-region)
+  (define-key evil-normal-state-map (kbd "TAB") 'folding-toggle-show-hide )
+  (defun toggle-folding-mode ()
+    "Toggle folding-mode on and off."
+    (interactive)
+    (if (bound-and-true-p folding-mode)
+	(turn-off-folding-mode)
+      (turn-on-folding-mode)))
+  ;; BUG
+  ;; after turn-of-folding-mode, folding-toggle-show-hide still work but wanky
+  )
+
