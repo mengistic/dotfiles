@@ -168,3 +168,6 @@
   (define-key evil-normal-state-map (kbd "SPC g") 'magit-status)
   )
 
+(use-package simple-modeline
+  :ensure t
+  :hook (after-init . simple-modeline-mode))
