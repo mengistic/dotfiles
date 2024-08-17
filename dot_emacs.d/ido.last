@@ -1,0 +1,30 @@
+;;; -*- coding: utf-8 -*-
+
+;; ----- ido-last-directory-list -----
+(
+ ("/home/sivmeng/" . ".emacs.d/")
+)
+
+;; ----- ido-work-directory-list -----
+(
+ "/home/sivmeng/.emacs.d/"
+ "/home/sivmeng/test/"
+)
+
+;; ----- ido-work-file-list -----
+(
+ "init.el"
+ "test.tex"
+)
+
+;; ----- ido-dir-file-cache -----
+(
+ ("/home/sivmeng/.emacs.d/" (26304 21407 83843 174000) ".lsp-session-v1" "saves/" "init.el" "ido.last" "auto-save-list/" ".git/" "elpa/" "projectile-bookmarks.eld" ".gitignore" "./" "../" "emacs-custom.el" "themes/")
+
+ ("/home/sivmeng/test/" (26304 20016 113747 642000) "test.log" "test.aux" "code.py" "test.synctex.gz" "test.pdf" "test.tex" "test.txt" "./" "../")
+
+ ("/home/sivmeng/" (26304 18813 328374 395000) ".gitconfig" ".python_history" "init.el" "junk/" ".ipython/" ".cache/" ".asy/" ".emacs.d/" ".bash_logout" ".jupyter/" ".dl/" "media/" ".vim/" ".emacs.d.orig/" ".viminfo" ".bash_history" ".bash_profile" ".local/" ".mozilla/" "doc/" "./" ".zprofile" ".gnupg/" "../" ".cargo/" ".config/" ".Xresources" "test/" ".lesshst" ".bashrc" ".android/" ".ssh/")
+)
+
+;; ----- ido-unc-hosts-cache -----
+t
