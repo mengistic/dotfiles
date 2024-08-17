@@ -1,6 +1,5 @@
 
 
-
 (require 'package)
 (package-initialize)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
@@ -14,7 +13,7 @@
 (setq compilation-read-command nil)
 
 (load custom-file)
-(load-theme 'gruber-darker t)
+(load-theme 'atom-one-dark t)
 (tool-bar-mode -1)
 (menu-bar-mode -1)
 (toggle-scroll-bar -1)
@@ -133,3 +132,13 @@
   (ranger-override-dired-mode t)
   (define-key evil-normal-state-map (kbd "SPC d") 'deer)
   )
+
+(use-package yasnippet
+  :ensure t
+  :defer t
+  :config
+  (define-key yas-minor-mode-map (kbd "<tab>") nil)
+  (define-key yas-minor-mode-map (kbd "TAB") nil)
+  (define-key yas-minor-mode-map (kbd "C-SPC") yas-maybe-expand)
+  )
+(yas-global-mode 1)
