@@ -34,8 +34,7 @@
   :config
   (evil-mode 1)
   (setq evil-default-state 'normal) ;;emacs insert normal visual
-  ;; (define-key evil-normal-state-map (kbd "H") 'switch-to-prev-buffer)
-  ;; (define-key evil-normal-state-map (kbd "L") 'switch-to-next-buffer)
+  (define-key evil-normal-state-map (kbd "S") 'shell-command)
   )
 
 
@@ -172,3 +171,9 @@
 (use-package simple-modeline
   :ensure t
   :hook (after-init . simple-modeline-mode))
+
+
+
+(setq compilation-read-command t)
+(define-key evil-normal-state-map (kbd "SPC c") 'compile)
+

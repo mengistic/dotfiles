@@ -1,0 +1,26 @@
+#!/bin/bash
+
+
+function info(){
+  vol=$(amixer get Master  | tail -1 | awk '{print $5}' | sed 's/[^0-9]*//g')
+  stat=$(amixer get Master  | tail -1 | awk '{print $6}' | sed 's/[^a-z]*//g')
+
+  if [[ "$stat" == "off" || $vol == 0 ]]; then
+    notify-send -t 600 --icon=~/pic/icon/audio-mute-1.png "Audio Muted" "(${vol}%)"
+  else
+    notify-send -t 600 --icon=~/pic/icon/speaker-full.png "Audio" "${vol}%"
+  fi
+}
+
+case $1 in 
+  "+")
+    amixer set Master 5%+ && info
+    ;;
+  "-")
+    amixer set Master 5%- && info
+    ;;
+  "=")
+    amixer set Master toggle && info
+    ;;
+esac
+

@@ -1,0 +1,25 @@
+#!/bin/bash
+
+
+
+function info(){
+  current=$(($(brightnessctl get)/960))
+
+  if [[ $current == [0-3][0-9] ]]; then
+    notify-send -t 600 --icon=~/pic/icon/brightness-low.png "Brightness" "${current}%"
+  elif [[ $current == [4-7][0-8] ]]; then
+    notify-send -t 600 --icon=~/pic/icon/brightness-medium.png "Brightness" "${current}%"
+  else
+    notify-send -t 600 --icon=~/pic/icon/brightness-high.png "Brightness" "${current}%"
+  fi
+}
+
+case $1 in 
+  "+")
+    brightnessctl --exponent=2 set 2%+ && info
+    ;;
+  "-")
+    brightnessctl --exponent=2 set 2%- && info
+    ;;
+esac
+
