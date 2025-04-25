@@ -1,12 +1,12 @@
 
 
 * MENGISTIC's dotfiles
-
 ** Emacs
 
 I use emacs as my editor. I try to use a few packages as
 possible. One package that needed to be configured is `lsp-mode`.
-#+begin_src 
+
+#+begin_src shell
   sudo pacman -S python-lsp-server texlab
 #+end_src
 
