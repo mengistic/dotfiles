@@ -4,7 +4,7 @@
 (load "~/.emacs.d/mylisp.el")
 
 
-(setq backup-directory-alist '(("." . "~/.emacs.d/saves/"))
+(setq backup-directory-alist '(("." . "~/.emacs.d/junk/"))
       inhibit-startup-screen t
       backup-inhibited t
       scroll-margin 7
@@ -12,7 +12,7 @@
       use-dialog-box nil
       display-line-number-width nil
       custom-file "~/.emacs.d/junk/emacs-custom.el"
-      savehist-file "~/.emacs.d/junk/savehist"
+      ;; savehist-file "~/.emacs.d/junk/savehist"
       auto-save-default nil
       create-lockfiles nil
       display-line-numbers-type 'relative
@@ -26,17 +26,19 @@
 (savehist-mode 1)
 (tool-bar-mode -1)
 (menu-bar-mode -1)
-(toggle-scroll-bar -1)
 (load custom-file)
+(toggle-scroll-bar -1)
 (save-place-mode 1)
 (global-auto-revert-mode 1)
-
-;; (rc/require-theme 'gruber-darker)
-(load-theme 'gruvbox-dark-hard)
-(set-frame-parameter nil 'alpha-background 90)
-;; (set-background-color "#000000")
 (set-face-attribute 'default (selected-frame) :height 140 :font "Iosevka Nerd Font-14")
 (set-fontset-font t 'khmer "Khmer OS Siemreap-12")
+
+;; theme
+;; (rc/require-theme 'gruber-darker)
+(rc/require 'gruvbox-theme)
+(load-theme 'gruvbox-dark-hard t)
+(set-frame-parameter nil 'alpha-background 90)
+;; (set-background-color "#000000")
 
 (global-set-key ")" #'my/smart-paren)
 (global-set-key "]" #'my/smart-square-brace)
@@ -144,26 +146,26 @@
 	  (lambda ()(set-window-margins
 		     (car (get-buffer-window-list (current-buffer) nil t)) 2 0)))
 
+
+;; (rc/require 'easy-hugo)
+;; (setq easy-hugo-basedir "~/doc/learn/hugo/")
+;; (setq easy-hugo-url "https://sivmeng.com")
+
+
 (rc/require 'feebleline)
-(feebleline-mode 1)
-
-(rc/require 'easy-hugo)
-(setq easy-hugo-basedir "~/doc/learn/hugo/")
-(setq easy-hugo-url "https://sivmeng.com")
-
 (rc/require 'evil)
 (rc/require 'ivy)
 (rc/require 'swiper)
 (rc/require 'counsel)
 (rc/require 'marginalia)
+(feebleline-mode 1)
 (marginalia-mode)
-(keymap-global-set "C-S-s" #'swiper-isearch)
 (evil-mode 1)
 (ivy-mode)
+(keymap-global-set "C-S-s" #'swiper-isearch)
 (keymap-global-set "M-x" #'counsel-M-x)
 (keymap-global-set "C-x C-f" #'counsel-find-file)
 
-;; (global-set-key (kbd "C-x C-d") 'dired-jump)
 
 
 (setq dired-listing-switches "-agho --group-directories-first")
@@ -177,12 +179,3 @@
 		(lambda ()
 		  (interactive)(move-end-of-line 1)(electric-newline-and-maybe-indent)))
 
-
-
-;;(rc/require 'vterm)
-
-
-
-;; games
-
-;;(require 'keywiz)
