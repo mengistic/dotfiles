@@ -2,7 +2,9 @@
 #exec --no-startup-id autotiling
 
 exec_always --no-startup-id dunst -config ~/.config/dunst/dunstrc 
-exec --no-startup-id /usr/lib/xdg-desktop-portal -r
+exec systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
+exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
+#exec --no-startup-id /usr/lib/xdg-desktop-portal -r
 
 set $mod Mod4
 set $left h
@@ -10,12 +12,14 @@ set $down j
 set $up k
 set $right l
 set $term foot
+set $browser firefox
 set $menu bemenu-run -b -p ">" --hp 10 -H 20
 
 
 
-output "*" background "/home/sivmeng/media/pic/astronaut.jpg" fill
+output "*" background "/home/sivmeng/media/pic/wall/anime-6.jpg" fill
 workspace_layout tabbed
+## tabbed default
 
 #output HDMI-A-1 pos 0 0
 #set $soundbar 'Seiko Epson Corporation EPSON PJ 0x01010101'
@@ -55,16 +59,19 @@ input "type:keyboard" {
 #
 bindsym $mod+q kill
 bindsym $mod+Return exec $term
+bindsym $mod+i exec $browser
 bindsym $mod+p exec $menu
+bindsym $mod+e exec emacs
 bindsym $mod+shift+p exec meng-choose-bookmark
-bindsym $mod+w exec meng-wallpaper-random
-bindsym $mod+Shift+w exec meng-wallpaper-choose
+#bindsym $mod+w exec meng-wallpaper-random
+bindsym $mod+w exec meng-wallpaper-choose
 bindsym XF86MonBrightnessUp exec ~/.config/sway/script/way-brightness +
 bindsym XF86MonBrightnessDown exec ~/.config/sway/script/way-brightness -
 bindsym XF86AudioMute exec ~/.config/sway/script/way-audio =
 bindsym XF86AudioLowerVolume exec ~/.config/sway/script/way-audio -
 bindsym XF86AudioRaiseVolume exec ~/.config/sway/script/way-audio +
 bindsym Print exec meng-screenshot
+bindsym $mod+Escape exec swaymsg input type:touchpad events toggle enabled disabled
 
 #exec_always ~/.config/way/script/way-xdgportal
 
@@ -208,13 +215,15 @@ bar {
      swaybar_command waybar
 }
 
-
+titlebar_border_thickness 0
+titlebar_padding 5 0
+# 1d4e89
 # class                 border  backgr. text    indicator child_border
-client.focused          #ffffff #000000 #ffffff #2e9ef4   #285577
+client.focused          #ffffff #2694bb #000000 #2e9ef4   #285577
 client.focused_inactive #333333 #5f676a #ffffff #484e50   #5f676a
-client.unfocused        #000000 #000000 #aaaaaa #292d2e   #222222
+client.unfocused        #000000 #333333 #ffffff #292d2e   #222222
 client.urgent           #2f343a #900000 #ffffff #900000   #900000
-client.background       #ffffff
+#client.background       #ffffff
 
 default_border none
 gaps outer 0px
@@ -238,3 +247,6 @@ gaps inner 1px
 #  before-sleep 'playerctl pause; swaylock -f -c 000000; swaymsg "output * power off"' \
 #  unlock 'swaymsg "output * power on"' \
 #  after-resume 'swaymsg "output * power on"'
+
+# blur enable
+# blur_radius 2
