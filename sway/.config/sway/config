@@ -1,0 +1,252 @@
+
+#exec --no-startup-id autotiling
+
+exec_always --no-startup-id dunst -config ~/.config/dunst/dunstrc 
+exec systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
+exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
+#exec --no-startup-id /usr/lib/xdg-desktop-portal -r
+
+set $mod Mod4
+set $left h
+set $down j
+set $up k
+set $right l
+set $term foot
+set $browser firefox
+set $menu bemenu-run -b -p ">" --hp 10 -H 20
+
+
+
+output "*" background "/home/sivmeng/media/pic/wall/anime-6.jpg" fill
+workspace_layout tabbed
+## tabbed default
+
+#output HDMI-A-1 pos 0 0
+#set $soundbar 'Seiko Epson Corporation EPSON PJ 0x01010101'
+#output $soundbar resolution 640x480@60Hz pos -10000 0
+workspace 10 output HDMI-A-1
+
+input "2:1:PS/2_Generic_Mouse" {
+  dwt enabled
+  tap enabled
+  natural_scroll enabled
+  middle_emulation enabled
+}
+
+input "1267:12889:VEN_04F3:00_04F3:3259_Touchpad" {
+  dwt enabled
+  tap enabled
+  natural_scroll enabled
+  middle_emulation enabled
+  pointer_accel 0.5
+}
+
+
+input "type:keyboard" {
+  xkb_layout us,kh
+  xkb_options grp:win_space_toggle
+  #xkb_variant qwerty-fr
+}
+
+
+#
+# You can get the names of your inputs by running: swaymsg -t get_inputs
+# Read `man 5 sway-input` for more information about this section.
+
+### Key bindings
+#
+# Basics:
+#
+bindsym $mod+q kill
+bindsym $mod+Return exec $term
+bindsym $mod+i exec $browser
+bindsym $mod+p exec $menu
+bindsym $mod+e exec emacs
+bindsym $mod+shift+p exec meng-choose-bookmark
+#bindsym $mod+w exec meng-wallpaper-random
+bindsym $mod+w exec meng-wallpaper-choose
+bindsym XF86MonBrightnessUp exec ~/.config/sway/script/way-brightness +
+bindsym XF86MonBrightnessDown exec ~/.config/sway/script/way-brightness -
+bindsym XF86AudioMute exec ~/.config/sway/script/way-audio =
+bindsym XF86AudioLowerVolume exec ~/.config/sway/script/way-audio -
+bindsym XF86AudioRaiseVolume exec ~/.config/sway/script/way-audio +
+bindsym Print exec meng-screenshot
+bindsym $mod+Escape exec swaymsg input type:touchpad events toggle enabled disabled
+
+#exec_always ~/.config/way/script/way-xdgportal
+
+# Drag floating windows by holding down $mod and left mouse button.
+# Resize them with right mouse button + $mod.
+# Despite the name, also works for non-floating windows.
+# Change normal to inverse to use left mouse button for resizing and right
+# mouse button for dragging.
+floating_modifier $mod normal
+
+# Reload the configuration file
+bindsym $mod+Shift+c reload
+#bindsym $mod+button4 workspace next
+#bindsym $mod+button5 workspace prev
+#bindsym $mod+button3 floating toggle
+
+# Exit sway (logs you out of your Wayland session)
+bindsym $mod+Shift+q exec swaynag -t warning -m 'Exiting Sway ...' -B 'Yes, exit sway' 'swaymsg exit'
+#
+# Moving around:
+#
+bindsym $mod+$left focus left
+bindsym $mod+$down focus down
+bindsym $mod+$up focus up
+bindsym $mod+$right focus right
+
+
+bindsym $mod+Shift+$left move left
+bindsym $mod+Shift+$right move right
+
+bindsym $mod+Shift+Left  resize shrink width 10px
+bindsym $mod+Shift+Down  resize grow height 10px
+bindsym $mod+Shift+Up    resize shrink height 10px
+bindsym $mod+Shift+Right resize grow width 10px
+bindsym $mod+Shift+Return workspace back_and_forth
+
+set $workspace1 1
+set $workspace2 2
+set $workspace3 3
+set $workspace4 4
+set $workspace5 5
+set $workspace6 6
+set $workspace7 7
+set $workspace8 8
+set $workspace9 9
+set $workspace10 10
+
+bindsym $mod+1 workspace $workspace1
+bindsym $mod+2 workspace $workspace2
+bindsym $mod+3 workspace $workspace3
+bindsym $mod+4 workspace $workspace4
+bindsym $mod+5 workspace $workspace5
+bindsym $mod+6 workspace $workspace6
+bindsym $mod+7 workspace $workspace7
+bindsym $mod+8 workspace $workspace8
+bindsym $mod+9 workspace $workspace9
+bindsym $mod+0 workspace $workspace10
+bindsym $mod+Shift+1 move container to workspace $workspace1
+bindsym $mod+Shift+2 move container to workspace $workspace2
+bindsym $mod+Shift+3 move container to workspace $workspace3
+bindsym $mod+Shift+4 move container to workspace $workspace4
+bindsym $mod+Shift+5 move container to workspace $workspace5
+bindsym $mod+Shift+6 move container to workspace $workspace6
+bindsym $mod+Shift+7 move container to workspace $workspace7
+bindsym $mod+Shift+8 move container to workspace $workspace8
+bindsym $mod+Shift+9 move container to workspace $workspace9
+bindsym $mod+Shift+0 move container to workspace $workspace10
+
+assign [app_id="org.telegram.desktop"] $workspace10
+
+# Layout stuff:
+#
+# You can "split" the current object of your focus with
+# $mod+b or $mod+v, for horizontal and vertical splits
+# respectively.
+bindsym $mod+b splith
+bindsym $mod+v splitv
+
+# Switch the current container between different layout styles
+bindsym $mod+s sticky enabled
+bindsym $mod+t layout tabbed
+bindsym $mod+Tab layout toggle split tabbed
+bindsym $mod+f fullscreen
+
+bindsym $mod+Shift+f floating toggle
+#bindsym $mod+space focus mode_toggle
+
+
+bindsym $mod+Shift+grave move scratchpad
+bindsym $mod+grave scratchpad show
+bindgesture swipe:4:up scratchpad show
+bindgesture swipe:4:down scratchpad show
+bindgesture swipe:right workspace prev
+bindgesture swipe:left workspace next
+
+for_window [app_id="pavucontrol"] floating enable 
+for_window [class="Pinentry-gtk"] floating enable 
+
+#floating_maximum_size 800 x 1000
+#
+# Resizing containers:
+#
+
+
+
+mode "resize" {
+  bindsym $left resize shrink width 10px
+  bindsym $down resize grow height 10px
+  bindsym $up resize shrink height 10px
+  bindsym $right resize grow width 10px
+  bindsym Left resize shrink width 10px
+  bindsym Down resize grow height 10px
+  bindsym Up resize shrink height 10px
+  bindsym Right resize grow width 10px
+  bindsym Return mode "default"
+  bindsym Escape mode "default"
+}
+
+bindsym $mod+r mode "resize"
+
+
+#
+# Status Bar:
+#
+# Read `man 5 sway-bar` for more information about this section.
+#bar {
+#  tray_output none
+#  position bottom
+#  status_command while date +'%Y-%m-%d %I:%M:%S %p'; do sleep 1; done
+#  colors {
+#    statusline #ffffff
+#    background #000000
+#    separator #ff00ff
+#    focused_workspace #ff00ff #000000 #ffffff
+#    inactive_workspace #000000 #000000 #aaaaaa
+#    focused_background #000000
+#  }
+#}
+
+bar {
+     swaybar_command waybar
+}
+
+titlebar_border_thickness 0
+titlebar_padding 5 0
+# 1d4e89
+# class                 border  backgr. text    indicator child_border
+client.focused          #ffffff #2694bb #000000 #2e9ef4   #285577
+client.focused_inactive #333333 #5f676a #ffffff #484e50   #5f676a
+client.unfocused        #000000 #333333 #ffffff #292d2e   #222222
+client.urgent           #2f343a #900000 #ffffff #900000   #900000
+#client.background       #ffffff
+
+default_border none
+gaps outer 0px
+gaps inner 1px
+
+#include /etc/sway/config.d/*
+
+#exec swayidle -w \
+#	timeout 10 'swaylock -f' \
+#	timeout 15 'swaymsg "output * power off"' \
+#	resume 'swaymsg "output * power on"'
+#
+#exec swayidle -w \
+#	timeout 10 'swaylock -f -c 000000' \
+#	timeout 20 'swaymsg "output * dpms off"' \
+#	resume 'swaymsg "output * dpms on"' \
+#	before-sleep 'swaylock -f -c 000000'
+
+#exec swayidle -w \
+#  timeout 10 'swaylock -f -c 000000; swaymsg "output * power off"' \
+#  before-sleep 'playerctl pause; swaylock -f -c 000000; swaymsg "output * power off"' \
+#  unlock 'swaymsg "output * power on"' \
+#  after-resume 'swaymsg "output * power on"'
+
+# blur enable
+# blur_radius 2
