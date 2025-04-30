@@ -1,21 +1,7 @@
 
 
 (load "~/.emacs.d/lisp/rc.el")
-
-(require 'org)
-(org-babel-load-file (expand-file-name "config.org" user-emacs-directory))
-
-
-;;(mapc 'load (file-expand-wildcards "~/.emacs.d/lisp/*.el"))
-
-(load "~/.emacs.d/lisp/rc.el")
-(load "~/.emacs.d/mylisp.el")
-
-;;(add-to-list 'load-path (expand-file-name "lisp" "~/.emacs.d/"))
-;;(add-to-list 'load-path "~/.emacs.d/lisp")
-;;(expand-file-name "lisp" user-emacs-directory)
-;;(setq load-path (cons (expand-file-name "~/.emacs.d/lisp") load-path))
-;;(add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/"))
+(load "~/.emacs.d/lisp/mylisp.el")
 
 
 (setq backup-directory-alist '(("." . "~/.emacs.d/saves/"))
@@ -194,3 +180,9 @@
 
 
 ;;(rc/require 'vterm)
+
+
+
+;; games
+
+;;(require 'keywiz)

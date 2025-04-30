@@ -1,6 +1,15 @@
 
 
 * MENGISTIC's dotfiles
+
+** Programs
+#+begin_src shell
+  sway bemenu waybar 
+#+end_src
+
+
+
+
 ** Emacs
 
 I use emacs as my editor. I try to use a few packages as
