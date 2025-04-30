@@ -1,0 +1,20 @@
+{
+
+    "include": "~/.config/waybar/modules",
+    "layer": "top",
+    "position": "bottom",
+    "height": 10,
+    "width": 1920,
+    "spacing": 2,
+
+
+    "modules-left": ["sway/workspaces", "hyprland/workspaces" ],
+    "modules-center": ["clock"],
+    "modules-right": ["network","battery", "backlight","pulseaudio","sway/language", "cpu"]
+
+
+
+}
+
+/* vim: set filetype=json : */
+
