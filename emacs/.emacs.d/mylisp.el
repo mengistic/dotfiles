@@ -92,3 +92,9 @@
   arg lines up."
    (interactive "*p")
    (my/move-text-internal (- arg)))
+
+(defun my/nuke-all-buffer ()
+  (interactive)
+  (mapc 'kill-buffer (buffer-list)))
+
+
