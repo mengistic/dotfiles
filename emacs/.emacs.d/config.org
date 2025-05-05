@@ -1,0 +1,169 @@
+#+STARTUP: fold
+
+* Multiple cursor
+#+begin_src emacs-lisp
+  ;; multiple cursors
+  (rc/require 'multiple-cursors)
+  (global-set-key (kbd "C-<down>") 'mc/mark-next-like-this)
+  (global-set-key (kbd "C-<up>") 'mc/mark-previous-like-this)
+  (global-set-key (kbd "C-.") 'mc/mark-next-like-this)
+#+end_src
+
+* Ido mode
+#+begin_src emacs-lisp
+  (ido-mode 1)
+  (setq-default confirm-nonexistent-file-or-buffer nil)
+  (setq ido-vertical-define-keys 'C-n-and-C-p-only)
+  (setq ido-enable-flex-matching t)
+  (setq ido-everywhere t)
+
+  ;; Make Ido complete almost anything (except the stuff where it shouldn't)
+  ;; https://www.emacswiki.org/emacs/InteractivelyDoThings#h5o-17
+  (defvar ido-enable-replace-completing-read t)
+  (defadvice completing-read
+      (around use-ido-when-possible activate)
+    (if (or (not ido-enable-replace-completing-read) ; Manual override disable ido
+            (and (boundp 'ido-cur-list)
+                 ido-cur-list)) ; Avoid infinite loop from ido calling this
+        ad-do-it
+      (let ((allcomp (all-completions "" collection predicate)))
+        (if allcomp
+            (setq ad-return-value
+                  (ido-completing-read prompt
+                                       allcomp
+                                       nil require-match initial-input hist def))
+          ad-do-it))))
+  (add-hook 'dired-mode-hook
+                '(lambda ()
+                   (set (make-local-variable 'ido-enable-replace-completing-read) nil)))
+
+  ;; vertical
+  ;; https://www.emacswiki.org/emacs/InteractivelyDoThings#h5o-26
+  (setq ido-decorations (quote ("\n=> " "" "\n   " "\n   ..." "[" "]" " [No match]" " [Matched]" " [Not readable]" " [Too big]" " [Confirm]")))
+  (defun ido-disable-line-truncation () (set (make-local-variable 'truncate-lines) nil))
+  (defun ido-define-keys () ;; C-n/p is more intuitive in vertical layout
+    (define-key ido-completion-map (kbd "C-n") 'ido-next-match)
+    (define-key ido-completion-map (kbd "C-p") 'ido-prev-match))
+  (add-hook 'ido-minibuffer-setup-hook 'ido-disable-line-truncation)
+  (add-hook 'ido-setup-hook 'ido-define-keys)
+
+#+end_src
+
+* Org mode
+#+begin_src emacs-lisp
+  (require 'org)
+  (rc/require 'org-bullets)
+  (add-hook 'org-mode-hook 'org-indent-mode)
+  (add-hook 'org-mode-hook 'org-bullets-mode)
+  (define-key org-mode-map "$" 'my/latex-smart-dollar)
+  (define-key org-mode-map "[" 'my/latex-smart-displaymath)
+
+  (setq org-src-window-setup 'current-window)
+  (setq org-preview-latex-default-process 'dvisvgm)
+  (setq org-format-latex-options (plist-put org-format-latex-options :scale 1.5))
+
+  ;; https://karthinks.com/software/scaling-latex-previews-in-emacs/
+  ;; https://kitchingroup.cheme.cmu.edu/blog/2016/11/06/Justifying-LaTeX-preview-fragments-in-org-mode/
+  (defun my/text-scale-adjust-latex-previews ()
+    "Adjust the size of latex preview fragments when changing the
+  buffer's text scale."
+    (pcase major-mode
+      ('latex-mode
+       (dolist (ov (overlays-in (point-min) (point-max)))
+         (if (eq (overlay-get ov 'category)
+                 'preview-overlay)
+             (my/text-scale--resize-fragment ov))))
+      ('org-mode
+       (dolist (ov (overlays-in (point-min) (point-max)))
+         (if (eq (overlay-get ov 'org-overlay-type)
+                 'org-latex-overlay)
+             (my/text-scale--resize-fragment ov))))))
+  (defun my/text-scale--resize-fragment (ov)
+    (overlay-put
+     ov 'display
+     (cons 'image
+           (plist-put
+            (cdr (overlay-get ov 'display))
+            :scale (+ 1.0 (* 0.25 text-scale-mode-amount))))))
+  (rc/require 'org-fragtog)
+  (add-hook 'text-scale-mode-hook #'my/text-scale-adjust-latex-previews)
+  (add-hook 'org-mode-hook 'org-fragtog-mode)
+#+end_src
+
+* Latex mode
+#+begin_src emacs-lisp
+  ;; latex
+  (rc/require 'auctex)
+  (require 'latex)
+  (setq-default TeX-engine 'xetex)
+  (setq lsp-latex-server 'texlab
+        TeX-auto-save t
+        TeX-parse-self t
+        electric-indent-mode t
+        font-latex-fontify-sectioning 1
+        font-latex-fontify-script nil
+        font-latex-fontify-sectioning 'color
+        TeX-auto-local nil
+        tex-fontify-script nil
+        font-latex-slide-title-face nil
+        TeX-PDF-mode t
+        TeX-source-correlate-mode t
+        TeX-source-correlate-start-server t)
+  (keymap-set LaTeX-mode-map "$" 'my/latex-smart-dollar)
+  (keymap-set LaTeX-mode-map "[" 'my/latex-smart-displaymath)
+  (add-to-list 'TeX-expand-list '("%sn" (lambda () server-name)))
+  (add-to-list 'TeX-expand-list '("%sn" (lambda () server-name)))
+  (add-to-list 'TeX-view-program-list
+               '("Zathura"
+                 ("zathura %o"
+                  (mode-io-correlate " --synctex-forward %n:0:\"%b\" -x \"emacsclient --socket-name=%sn +%{line} %{input}\""))
+                 "zathura"))
+  (setcar (cdr (assoc 'output-pdf TeX-view-program-selection)) "Zathura")
+#+end_src
+
+* Dired mode
+#+begin_src emacs-lisp
+  ;; dired
+  (add-hook 'dired-mode-hook #'dired-hide-details-mode)
+  (setq dired-dwim-target t)
+  (setq dired-listing-switches "-agho --group-directories-first")
+  (setq dired-guess-shell-alist-user
+        '(("\\.\\(png\\|jpe?g\\|tiff\\)" "imv" "xdg-open")
+          ("\\.\\(mp[34]\\|m4a\\|ogg\\|flac\\|webm\\|mkv\\)" "mpv" "xdg-open")
+  		(".*" "xdg-open")))
+#+end_src
+
+* Yasnippet
+#+begin_src emacs-lisp
+  (rc/require 'yasnippet)
+  (yas-global-mode 1)
+  (define-key yas-minor-mode-map (kbd "<tab>") nil)
+  (define-key yas-minor-mode-map (kbd "TAB") nil)
+  (define-key yas-minor-mode-map (kbd "C-SPC") yas-maybe-expand)
+#+end_src
+
+* Company
+#+begin_src emacs-lisp
+    (rc/require 'company)
+  (add-hook 'after-init-hook 'global-company-mode)
+  (setq company-idle-delay 0
+        company-minimum-prefix-length 2
+        company-selection-wrap-around t
+        company-format-margin-function nil)
+#+end_src
+
+* Lsp
+#+begin_src emacs-lisp
+  (rc/require 'lsp-mode)
+  (setq lsp-diagnostic-package :none
+        lsp-headerline-breadcrumb-enable nil
+        lsp-eldoc-enable-hover nil)
+  (add-hook 'LaTeX-mode-hook #'lsp)
+  (add-hook 'latex-mode-hook #'lsp)
+  (add-hook 'python-mode-hook #'lsp)
+  (add-hook 'c-mode-hook #'lsp)
+  (add-hook 'lsp-mode-hook
+            (lambda ()
+              (define-key lsp-mode-map (kbd "C-c r") 'lsp-rename)))
+#+end_src
+
