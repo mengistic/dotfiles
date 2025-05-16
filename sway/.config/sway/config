@@ -17,7 +17,7 @@ set $menu bemenu-run -b -p ">" --hp 10 -H 20
 
 
 
-output "*" background "/home/sivmeng/media/pic/wall/anime-6.jpg" fill
+output "*" background "/home/sivmeng/media/pic/wall/pixel-art-avatar.png" fill
 workspace_layout tabbed
 ## tabbed default
 
@@ -71,7 +71,12 @@ bindsym XF86AudioMute exec ~/.config/sway/script/way-audio =
 bindsym XF86AudioLowerVolume exec ~/.config/sway/script/way-audio -
 bindsym XF86AudioRaiseVolume exec ~/.config/sway/script/way-audio +
 bindsym Print exec meng-screenshot
-bindsym $mod+Escape exec swaymsg input type:touchpad events toggle enabled disabled
+bindsym $mod+Delete exec swaymsg input type:touchpad events toggle enabled disabled
+
+# testing
+bindsym $mod+Escape exec ~/.local/app/woomer/target/debug/woomer
+bindsym $mod+Slash exec meng-emoticon
+
 
 #exec_always ~/.config/way/script/way-xdgportal
 
@@ -151,7 +156,8 @@ bindsym $mod+b splith
 bindsym $mod+v splitv
 
 # Switch the current container between different layout styles
-bindsym $mod+s sticky enabled
+bindsym $mod+Shift+s sticky enabled
+bindsym $mod+s layout stacked
 bindsym $mod+t layout tabbed
 bindsym $mod+Tab layout toggle split tabbed
 bindsym $mod+f fullscreen
@@ -192,32 +198,13 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
-
-#
-# Status Bar:
-#
-# Read `man 5 sway-bar` for more information about this section.
-#bar {
-#  tray_output none
-#  position bottom
-#  status_command while date +'%Y-%m-%d %I:%M:%S %p'; do sleep 1; done
-#  colors {
-#    statusline #ffffff
-#    background #000000
-#    separator #ff00ff
-#    focused_workspace #ff00ff #000000 #ffffff
-#    inactive_workspace #000000 #000000 #aaaaaa
-#    focused_background #000000
-#  }
-#}
-
 bar {
-     swaybar_command waybar
+    swaybar_command waybar
 }
 
 titlebar_border_thickness 0
 titlebar_padding 5 0
-# 1d4e89
+# 1d4e89 2694bb 9457eb
 # class                 border  backgr. text    indicator child_border
 client.focused          #ffffff #2694bb #000000 #2e9ef4   #285577
 client.focused_inactive #333333 #5f676a #ffffff #484e50   #5f676a
@@ -248,5 +235,9 @@ gaps inner 1px
 #  unlock 'swaymsg "output * power on"' \
 #  after-resume 'swaymsg "output * power on"'
 
+
+# ## for swayfx
 # blur enable
-# blur_radius 2
+# blur_xray disable
+# # blur_radius 2
+# corner_radius 0
