@@ -2,21 +2,29 @@
 
 * MENGISTIC's dotfiles
 
-** Programs
+I use =gnu stow= to manange my dotfiles. For example, to have my Emacs
+config files, you need to clone this repo to your =$HOME= directory,
+then cd to the repo and run the command
 #+begin_src shell
-  sway bemenu waybar 
+  stow emacs
+#+end_src
+GNU Stow will symlinks all of my Emacs configurations to appropriate places.
+
+** Programs
+Here are the programs that I use for my system:
+#+begin_src shell
+  sway bemenu waybar zoxide emacs foot ttf-iosevka-nerd ttf-khmer fzf lf
 #+end_src
 
-
-
-
 ** Emacs
+Make sure that the fonts =Iosevka= and =Khmer OS Siemreap= are installed.
+Otherwise you can comment out the section on fonts config.
 
 I use emacs as my editor. I try to use a few packages as
-possible. One package that needed to be configured is `lsp-mode`.
+possible. One package that needed to be configured is =lsp-mode=.
 
 #+begin_src shell
   sudo pacman -S python-lsp-server texlab
 #+end_src
 
-
+TODO: I will change to eglot later...
